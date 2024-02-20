@@ -1,0 +1,2 @@
+macropodus==0.0.7
+tqdm==4.31.1

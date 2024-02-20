@@ -1,0 +1,3 @@
+macropodus==0.0.7
+numpy==1.22.4
+tqdm==4.31.1
