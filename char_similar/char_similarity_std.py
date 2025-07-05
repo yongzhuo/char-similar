@@ -82,8 +82,8 @@ def sim_frequency(char1, char2):
     Returns:
         result: float, 0-1, eg. 0.75
     """
-    char1_fr = dict_char_frequency.get(char1, 0)
-    char2_fr = dict_char_frequency.get(char2, 0)
+    char1_fr = dict_char_frequency.get(char1, 1)
+    char2_fr = dict_char_frequency.get(char2, 1)
     result = 0
     if char1_fr and char2_fr:
         result = 1 - abs((char1_fr - char2_fr) / max(char1_fr, char2_fr))
@@ -150,11 +150,12 @@ def sim_order(char1, char2):
     """
     char1_or = dict_char_order.get(char1, "")
     char2_or = dict_char_order.get(char2, "")
-    result = 0
     if char1_or and char2_or:
         count_and = len(set(list(char1_or)) & set(list(char2_or)))
         count_union = len(set(list(char1_or)) | set(list(char2_or)))
         result = count_and / count_union
+    else:
+        result = 1.0
     return result
 
 def sim_w2v(char1, char2):
@@ -348,8 +349,9 @@ def std_cal_sim(char1, char2, rounded=4, kind="shape"):
     Returns:
         result: float, 0-1, eg. 0.6
     """
-
-    if kind.upper() == "PINYIN":
+    if char1 == char2:
+        result = 1
+    elif kind.upper() == "PINYIN":
         result = cal_sim_by_pinyin(char1, char2, rounded)
     elif kind.upper() == "W2V":
         result = cal_sim_by_w2v(char1, char2, rounded)
